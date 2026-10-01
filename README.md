@@ -1,44 +1,86 @@
-# Day 1 — ABTalks Databricks Cohort
+# ABTalks Databricks Cohort
 
-## Overview
+A 31-day hands-on journey through the Databricks Lakehouse platform. This repository tracks daily progress — from workspace basics and Unity Catalog to data pipelines, analytics, and machine learning. Each day includes a notebook and detailed notes documenting what was learned.
 
-Kicked off Day 1 of the ABTalks Databricks cohort! Today was all about getting comfortable with the Databricks platform and creating our first notebook.
+## Daily Progress
 
-## What We Did
+| Day | Title | Status | Topics Covered |
+| --- | --- | --- | --- |
+| 1 | Hello Lakehouse | ✅ Complete | Workspace navigation, compute, notebooks, PySpark & SQL basics, `%sql` magic |
+| 2 | Catalog & Schema Setup | ✅ Complete | Unity Catalog, `USE CATALOG`/`USE SCHEMA`, medallion architecture, `SHOW SCHEMAS`/`SHOW VOLUMES` |
+| 3 | — | ⬜ Upcoming | — |
+| 4 | — | ⬜ Upcoming | — |
+| 5 | — | ⬜ Upcoming | — |
+| 6 | — | ⬜ Upcoming | — |
+| 7 | — | ⬜ Upcoming | — |
+| 8 | — | ⬜ Upcoming | — |
+| 9 | — | ⬜ Upcoming | — |
+| 10 | — | ⬜ Upcoming | — |
+| 11 | — | ⬜ Upcoming | — |
+| 12 | — | ⬜ Upcoming | — |
+| 13 | — | ⬜ Upcoming | — |
+| 14 | — | ⬜ Upcoming | — |
+| 15 | — | ⬜ Upcoming | — |
+| 16 | — | ⬜ Upcoming | — |
+| 17 | — | ⬜ Upcoming | — |
+| 18 | — | ⬜ Upcoming | — |
+| 19 | — | ⬜ Upcoming | — |
+| 20 | — | ⬜ Upcoming | — |
+| 21 | — | ⬜ Upcoming | — |
+| 22 | — | ⬜ Upcoming | — |
+| 23 | — | ⬜ Upcoming | — |
+| 24 | — | ⬜ Upcoming | — |
+| 25 | — | ⬜ Upcoming | — |
+| 26 | — | ⬜ Upcoming | — |
+| 27 | — | ⬜ Upcoming | — |
+| 28 | — | ⬜ Upcoming | — |
+| 29 | — | ⬜ Upcoming | — |
+| 30 | — | ⬜ Upcoming | — |
+| 31 | — | ⬜ Upcoming | — |
 
-### 1. Explored the Databricks Platform
+### Day 1 — Hello Lakehouse
 
-- **Workspace Navigation**: Got familiar with the Databricks workspace layout — the sidebar, workspace browser, and catalog explorer.
-- **Compute**: Learned about clusters and how to start, configure, and stop a compute resource.
-- **Notebooks**: Understood the notebook interface — cells, execution, languages (Python, SQL, Scala, R), and how to switch between them.
-- **Unity Catalog**: Brief overview of how data is governed through catalogs, schemas, and tables.
+Got comfortable with the Databricks platform and created our first notebook.
 
-### 2. Created Our First Notebook
+- Explored the workspace layout, compute, and notebook interface
+- Ran `print("Hello, Databricks!")` in a Python cell and attached it to a cluster
+- Tested PySpark (`spark.range(10)`) and SQL (`SELECT * FROM range(10)`) side by side
+- Learned that Python and SQL cells can be mixed using `%sql` magic commands
+- Got a brief overview of Unity Catalog's role in data governance
 
-- Created a new notebook in the workspace.
-- Ran a simple `print("Hello, Databricks!")` in a Python cell.
-- Explored attaching the notebook to a running cluster.
-- Learned how to execute cells and view results inline.
+**Key takeaway**: Databricks unifies data engineering, analytics, and ML in one workspace where Spark DataFrames and SQL are first-class citizens.
 
-### 3. Tested Spark and SQL
+### Day 2 — Catalog & Schema Setup
 
-- Used PySpark (`spark.range(10)`) to create a simple DataFrame and viewed results with `.show()`.
-- Wrote basic SQL queries in a SQL cell (`SELECT * FROM range(10)`) to run directly against the Lakehouse.
-- Compared PySpark DataFrame operations with equivalent SQL queries to understand both interfaces.
-- Learned that Python and SQL cells can be mixed in the same notebook using `%sql` magic commands.
+Dove into Unity Catalog — set up the data environment and explored the `health_claims` catalog.
 
-## Key Takeaways
+- Discovered workspace catalogs: `dbacademy`, `health_claims`, `samples`, `system`, `workspace`
+- Used `USE CATALOG health_claims;` and `USE SCHEMA bronze;` to set context via SQL
+- Found a **medallion architecture** in `health_claims` (bronze → silver → gold)
+- Ran `SHOW SCHEMAS` and `SHOW VOLUMES` to explore the bronze schema's `raw` volume
+- Practiced writing multi-statement SQL cells with semicolons
 
-- Databricks brings data engineering, analytics, and ML into one unified workspace.
-- Notebooks support multiple languages and can be attached to clusters for interactive execution.
-- Unity Catalog provides centralized governance for all data assets.
-- Spark DataFrames and SQL are first-class citizens — both run on the same engine and can be combined in a single notebook.
+**Key takeaway**: Unity Catalog's three-level namespace (catalog.schema.table) organizes and governs data, while the medallion architecture structures pipelines from raw to curated.
 
-## Next Steps
+## Repository Structure
 
-- Explore Delta Lake and table operations.
-- Start working with data loading and transformations.
-- Dive deeper into SQL and PySpark within notebooks.
+```
+databricks-cohort/
+├── README.md                      # This file — cohort summary
+├── daily notes/
+│   ├── Day1.md                    # Day 1 detailed notes
+│   └── Day2.md                    # Day 2 detailed notes
+└── notebooks/
+    ├── day01_hello_lakehouse.py   # Day 1 notebook
+    └── day02_setup_catalog.py     # Day 2 notebook
+```
+
+## What's Next
+
+- Load raw data into the bronze layer using Auto Loader or `COPY INTO`
+- Transform bronze data into silver with cleaning and deduplication
+- Build gold-layer aggregate tables for analytics and reporting
+- Dive deeper into Delta Lake and PySpark within notebooks
 
 ---
-*Day 1 complete — excited for what's next!* 🚀
+*Follow along as we build on the Lakehouse, one day at a time!* 🚀
