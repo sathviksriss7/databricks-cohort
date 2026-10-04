@@ -8,7 +8,7 @@ A 31-day hands-on journey through the Databricks Lakehouse platform. This reposi
 | --- | --- | --- | --- |
 | 1 | Hello Lakehouse | ✅ Complete | Workspace navigation, compute, notebooks, PySpark & SQL basics, `%sql` magic |
 | 2 | Catalog & Schema Setup | ✅ Complete | Unity Catalog, `USE CATALOG`/`USE SCHEMA`, medallion architecture, `SHOW SCHEMAS`/`SHOW VOLUMES` |
-| 3 | — | ⬜ Upcoming | — |
+| 3 | Spark DataFrame Basics | ✅ Complete | `spark.read.table`, `select`/`filter`/`withColumn`, `groupBy`/`agg`, `orderBy`, `show`/`count`/`collect`, temp views, SQL interop |
 | 4 | — | ⬜ Upcoming | — |
 | 5 | — | ⬜ Upcoming | — |
 | 6 | — | ⬜ Upcoming | — |
@@ -62,6 +62,18 @@ Dove into Unity Catalog — set up the data environment and explored the `health
 
 **Key takeaway**: Unity Catalog's three-level namespace (catalog.schema.table) organizes and governs data, while the medallion architecture structures pipelines from raw to curated.
 
+### Day 3 — Spark DataFrame Basics
+
+Got hands-on with PySpark DataFrames using the NYC taxi trips sample dataset.
+
+- Loaded `samples.nyctaxi.trips` with `spark.read.table()` and projected columns with `select()` + `to_date()`
+- Filtered rows with `filter()` and added a derived column with `withColumn()`
+- Aggregated with `groupBy()`/`agg()` and sorted with `orderBy()`
+- Ran actions — `show()`, `count()`, `collect()` — and iterated over `Row` objects
+- Exposed a DataFrame to SQL via `createOrReplaceTempView()` and queried it with `%sql`
+
+**Key takeaway**: PySpark DataFrames are lazy — transformations build a plan, actions execute it — and they interoperate with SQL through temp views.
+
 ## Repository Structure
 
 ```
@@ -69,10 +81,12 @@ databricks-cohort/
 ├── README.md                      # This file — cohort summary
 ├── daily notes/
 │   ├── Day1.md                    # Day 1 detailed notes
-│   └── Day2.md                    # Day 2 detailed notes
+│   ├── Day2.md                    # Day 2 detailed notes
+│   └── Day3.md                    # Day 3 detailed notes
 └── notebooks/
     ├── day01_hello_lakehouse.py   # Day 1 notebook
-    └── day02_setup_catalog.py     # Day 2 notebook
+    ├── day02_setup_catalog.py     # Day 2 notebook
+    └── day03_spark_basics.py      # Day 3 notebook
 ```
 
 ## What's Next
