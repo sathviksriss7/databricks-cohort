@@ -9,7 +9,7 @@ A 31-day hands-on journey through the Databricks Lakehouse platform. This reposi
 | 1 | Hello Lakehouse | ✅ Complete | Workspace navigation, compute, notebooks, PySpark & SQL basics, `%sql` magic |
 | 2 | Catalog & Schema Setup | ✅ Complete | Unity Catalog, `USE CATALOG`/`USE SCHEMA`, medallion architecture, `SHOW SCHEMAS`/`SHOW VOLUMES` |
 | 3 | Spark DataFrame Basics | ✅ Complete | `spark.read.table`, `select`/`filter`/`withColumn`, `groupBy`/`agg`, `orderBy`, `show`/`count`/`collect`, temp views, SQL interop |
-| 4 | — | ⬜ Upcoming | — |
+| 4 | Generate Claims Data | ✅ Complete | Synthetic healthcare claims generation (Faker), raw CSV landing zone, data dictionary, medallion plan |
 | 5 | — | ⬜ Upcoming | — |
 | 6 | — | ⬜ Upcoming | — |
 | 7 | — | ⬜ Upcoming | — |
@@ -74,24 +74,41 @@ Got hands-on with PySpark DataFrames using the NYC taxi trips sample dataset.
 
 **Key takeaway**: PySpark DataFrames are lazy — transformations build a plan, actions execute it — and they interoperate with SQL through temp views.
 
+### Day 4 — Generate Claims Data
+
+Built a synthetic healthcare-claims dataset with `faker` and landed it in the raw volume.
+
+- Generated 5 entities: plans (20), providers (805), members (5,010), claims (50,015), claim lines (~224k)
+- Injected intentional data quality issues: duplicates, nulls, mixed-case states, bad dates, implausible ages, null FKs
+- Wrote CSVs to `/Volumes/health_claims/bronze/raw/` — claims split into 3 dated files for incremental-load practice
+- Created `docs/data_dictionary.md` (column-level reference) and `docs/medallion_plan.md` (raw → bronze → silver → gold plan)
+- Fixed an f-string syntax error: `f'{9920{0+i%5}'` → `f'9920{i%5}'`
+
+**Key takeaway**: Synthetic data with controlled quality issues lets us practice real data engineering pipelines without needing actual PII — and documenting the schema first makes the downstream cleaning steps clear.
+
 ## Repository Structure
 
 ```
 databricks-cohort/
 ├── README.md                      # This file — cohort summary
+├── docs/
+│   ├── data_dictionary.md         # Column-level data dictionary for all entities
+│   └── medallion_plan.md          # Raw -> Bronze -> Silver -> Gold architecture plan
 ├── daily notes/
 │   ├── Day1.md                    # Day 1 detailed notes
 │   ├── Day2.md                    # Day 2 detailed notes
-│   └── Day3.md                    # Day 3 detailed notes
+│   ├── Day3.md                    # Day 3 detailed notes
+│   └── Day4.md                    # Day 4 detailed notes
 └── notebooks/
     ├── day01_hello_lakehouse.py   # Day 1 notebook
     ├── day02_setup_catalog.py     # Day 2 notebook
-    └── day03_spark_basics.py      # Day 3 notebook
+    ├── day03_spark_basics.py      # Day 3 notebook
+    └── day04_generate_claims.py   # Day 4 notebook
 ```
 
 ## What's Next
 
-- Load raw data into the bronze layer using Auto Loader or `COPY INTO`
+- Ingest raw CSVs into bronze Delta tables using `COPY INTO` and Auto Loader
 - Transform bronze data into silver with cleaning and deduplication
 - Build gold-layer aggregate tables for analytics and reporting
 - Dive deeper into Delta Lake and PySpark within notebooks
