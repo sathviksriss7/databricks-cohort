@@ -10,7 +10,7 @@ A 31-day hands-on journey through the Databricks Lakehouse platform. This reposi
 | 2 | Catalog & Schema Setup | ✅ Complete | Unity Catalog, `USE CATALOG`/`USE SCHEMA`, medallion architecture, `SHOW SCHEMAS`/`SHOW VOLUMES` |
 | 3 | Spark DataFrame Basics | ✅ Complete | `spark.read.table`, `select`/`filter`/`withColumn`, `groupBy`/`agg`, `orderBy`, `show`/`count`/`collect`, temp views, SQL interop |
 | 4 | Generate Claims Data | ✅ Complete | Synthetic healthcare claims generation (Faker), raw CSV landing zone, data dictionary, medallion plan |
-| 5 | — | ⬜ Upcoming | — |
+| 5 | Delta Lake Fundamentals | ✅ Complete | CSV to Delta, `DESCRIBE HISTORY`/`DESCRIBE DETAIL`, time travel (`VERSION AS OF`), schema enforcement vs. `mergeSchema` |
 | 6 | — | ⬜ Upcoming | — |
 | 7 | — | ⬜ Upcoming | — |
 | 8 | — | ⬜ Upcoming | — |
@@ -86,6 +86,18 @@ Built a synthetic healthcare-claims dataset with `faker` and landed it in the ra
 
 **Key takeaway**: Synthetic data with controlled quality issues lets us practice real data engineering pipelines without needing actual PII — and documenting the schema first makes the downstream cleaning steps clear.
 
+### Day 5 — Delta Lake Fundamentals
+
+Got hands-on with Delta Lake — the storage layer that powers the Lakehouse.
+
+- Read a raw CSV from the UC Volume and wrote it as a Delta table (`health_claims.bronze.delta_demo`)
+- Inspected table history and metadata with `DESCRIBE HISTORY` and `DESCRIBE DETAIL`
+- Practiced time travel with `VERSION AS OF 0` to read the table before an append
+- Demonstrated schema enforcement (blocked mismatched write) vs. `mergeSchema=true` (allowed schema evolution)
+- Fixed 3 bugs: DBFS path (`/mnt/` → `/Volumes/`), SQL-in-Python (`%sql` magic), Spark Connect type inference (`schema=` param)
+
+**Key takeaway**: Delta Lake gives you ACID transactions, automatic versioning, time travel, and schema enforcement for free — `saveAsTable` is all it takes to get a governed, queryable, history-aware table.
+
 ## Repository Structure
 
 ```
@@ -98,20 +110,22 @@ databricks-cohort/
 │   ├── Day1.md                    # Day 1 detailed notes
 │   ├── Day2.md                    # Day 2 detailed notes
 │   ├── Day3.md                    # Day 3 detailed notes
-│   └── Day4.md                    # Day 4 detailed notes
+│   ├── Day4.md                    # Day 4 detailed notes
+│   └── Day5.md                    # Day 5 detailed notes
 └── notebooks/
     ├── day01_hello_lakehouse.py   # Day 1 notebook
     ├── day02_setup_catalog.py     # Day 2 notebook
     ├── day03_spark_basics.py      # Day 3 notebook
-    └── day04_generate_claims.py   # Day 4 notebook
+    ├── day04_generate_claims.py   # Day 4 notebook
+    └── day05_delta_fundamentals.py # Day 5 notebook
 ```
 
 ## What's Next
 
-- Ingest raw CSVs into bronze Delta tables using `COPY INTO` and Auto Loader
+- Ingest all raw CSVs into bronze Delta tables using `COPY INTO` and Auto Loader
 - Transform bronze data into silver with cleaning and deduplication
 - Build gold-layer aggregate tables for analytics and reporting
-- Dive deeper into Delta Lake and PySpark within notebooks
+- Explore Delta optimization: `OPTIMIZE`, `ZORDER`, `VACUUM`
 
 ---
 *Follow along as we build on the Lakehouse, one day at a time!* 🚀
